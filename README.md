@@ -1,9 +1,11 @@
 # oTree Whisper API 
 
-This is a simple app that demonstrates Open AI's Whisper API for [oTree](https://www.otree.org/). Please feel free to leave any feedback or open an issue if you spot a problem. I have only tested this in Windows 11 using Chrome.
+This is a simple app that demonstrates Open AI's [Whisper API](https://openai.com/index/whisper/) for [oTree](https://www.otree.org/). Please feel free to leave any feedback or open an issue if you spot a problem. I have only tested this in Windows 11 using Chrome.
 
 ## Recording and Translation
-The Start button will trigger a recording. Using oTree Live Pages function, the Stop button will save the base64 and webm file, and run this through Whisper. Each file is saved to the static directory, although you should consider using an s3 bucket or something if this does not scale well. The base64 text and transcript are saved to the player variables.
+The Start button will trigger a recording. Using oTree Live Pages function, the Stop button will save the base64 and webm file, and run this through Whisper. 
+
+Update: for security and data concerns, Chris from oTree has advised to not save audio files directly to the server. I have updated the app to write to an Amazon S3 bucket. This is then read as a temporary file and sent to Whisper API via the requests package. The base64 text and transcript are saved to the player variables.
 
 <img src="https://raw.githubusercontent.com/clintmckenna/oTree-Whisper/master/screenshot.png" alt="screenshot" width="500"/>
 
@@ -11,14 +13,8 @@ The Start button will trigger a recording. Using oTree Live Pages function, the 
 ## API key
 To use this, you will need to acquire a key from [OpenAI's API](https://openai.com/product). Add this as an environment variable to your local environment or you can just paste it into the code.
 
-## OpenAI package requirements
-When using locally, you will also need to install openai's Python package. Be sure to add this to your requrements.txt file before using online. 
-
----
-> <i>openai==1.31.0</i>
----
-
-I have only tested this with the most recent version of openai.
+## Package requirements
+When using locally, you will also need to install the following Python packages: openai for whisper, and boto3 for Amazon S3. Be sure to add these to your requrements.txt file before using online.
 
 ## Citation
 As part of oTree's [installation agreement](https://otree.readthedocs.io/en/master/install.html), be sure to cite their paper: 
