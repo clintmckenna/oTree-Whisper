@@ -10,11 +10,12 @@ To use this, you will need to acquire a key from [OpenAI's API](https://openai.c
 
 ## OpenAI package requirements
 When using locally, you will also need to install openai's Python package. Be sure to add this to your requrements.txt file before using online. 
+
 ---
 > <i>openai==1.31.0</i>
 ---
-I have only tested this with the most recent version of openai.
 
+I have only tested this with the most recent version of openai.
 
 ## Citation
 As part of oTree's [installation agreement](https://otree.readthedocs.io/en/master/install.html), be sure to cite their paper: 
