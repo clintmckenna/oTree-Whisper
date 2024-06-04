@@ -5,6 +5,9 @@ This is a simple app that demonstrates Open AI's Whisper API for [oTree](https:/
 ## Recording and Translation
 The Start button will trigger a recording. Using oTree Live Pages function, the Stop button will save the base64 and webm file, and run this through Whisper. Each file is saved to the static directory, although you should consider using an s3 bucket or something if this does not scale well. The base64 text and transcript are saved to the player variables.
 
+<img src="https://raw.githubusercontent.com/clintmckenna/oTree-Whisper/master/screenshot.png" alt="screenshot" width="500"/>
+
+
 ## API key
 To use this, you will need to acquire a key from [OpenAI's API](https://openai.com/product). Add this as an environment variable to your local environment or you can just paste it into the code.
 
