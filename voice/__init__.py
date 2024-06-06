@@ -57,15 +57,16 @@ class record(Page):
             # webm_file = open(filepath_webm, "wb")
             # webm_file.write(b64)
 
+
+            # you can remove the amazon s3 bucket code if you do not want to save any files
+            # create filename format: (sessioncode)_(player id in group).webm
+            filename = str(player.session.code) + '_' + str(player.id_in_group) + '.webm'
+
             # load s3 bucket environment
             s3_client = boto3.client('s3',
                 aws_access_key_id=os.environ.get('ACCESS_KEY'),
                 aws_secret_access_key=os.environ.get('SECRET_KEY')
             )
-
-            # get filename
-            filename = str(player.session.code) + '_' + str(player.id_in_group) + '.webm'
-
 
             # save webm to s3
             s3_client.put_object(
@@ -74,7 +75,6 @@ class record(Page):
                 Body= b64
             )   
 
-
             # Whisper API functions
             try:
                 
@@ -82,22 +82,12 @@ class record(Page):
                 OPENAI_KEY = os.environ.get('CHATGPT_KEY')
                 # or if you want to just paste it in...
                 # OPENAI_KEY = "sk-..."
-                client = openai.OpenAI(api_key = OPENAI_KEY)
-
-                # load audio data
-                # audio_file = open(filepath_webm, "rb") # if using file saved on server
-                audio_file = s3_client.get_object(Bucket='otreewhisper', Key=filename)
-                audio_data = audio_file['Body'].read()
-                
-                # create file-like object for requests
-                audio_object = io.BytesIO(audio_data)
-                files = {'file': audio_object}
 
                 # Send the file-like object to Whisper API for transcription using requests
                 response = requests.post(
                     url = 'https://api.openai.com/v1/audio/transcriptions',
                     headers = {'Authorization': f'Bearer {OPENAI_KEY}'},
-                    files={"file": (filename, audio_data, "audio/webm")},
+                    files={"file": (filename, b64, "audio/webm")}, # base64 decoded data sent directly
                     data={'model': 'whisper-1'}
                 )
 
@@ -105,22 +95,9 @@ class record(Page):
                 output = dict(response.json())
                 print(output['text'])
                 player.transcript = output["text"]    
-
-
-                # run audio through api (old version from server file)
-                # transcript = client.audio.transcriptions.create(
-                #     model = "whisper-1",
-                #     file = audio_data
-                # )
-
-                # # preview and write to player vars
-                # output = dict(transcript)
-                # print(output["text"])
-                # player.transcript = output["text"]    
-                
                 
             except Exception as e:
-                print("error loading wav file:", e)
+                print("error loading audio file:", e)
 
             return {player.id_in_group: output}  
         else: 
