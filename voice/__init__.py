@@ -1,9 +1,7 @@
 from otree.api import *
-import openai
 import boto3
 import base64
 import os
-import io
 import requests
 
 doc = """
@@ -102,20 +100,6 @@ class record(Page):
             return {player.id_in_group: output}  
         else: 
             pass
-
-    @staticmethod
-    def before_next_page(player, timeout_happened):
-        return {
-        }
-    
-    @staticmethod
-    def js_vars(player):
-        return dict(
-            path = str(player.session.code) + '_' + str(player.id_in_group) + '.webm',
-            s3_accessKeyId = os.environ.get('ACCESS_KEY'),
-            s3_secretAccessKey = os.environ.get('SECRET_KEY')
-        )
- 
 
 page_sequence = [
     record, 

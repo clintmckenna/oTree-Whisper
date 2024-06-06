@@ -13,7 +13,7 @@ Update: for security and data concerns, Chris from oTree has advised to not save
 To use this, you will need to acquire a key from [OpenAI's API](https://openai.com/product). Add this as an environment variable to your local environment or you can just paste it into the code. If you use Amazon S3 to save the audio samples, you will need to add these as well.
 
 ## Package requirements
-When using locally, you will also need to install the following Python packages: openai for whisper, and boto3 for Amazon S3. Be sure to add these to your requrements.txt file before using online.
+When using locally, you will also need to install the boto3 Python package if you plan to save the files to Amazon S3. Be sure to add these to your requrements.txt file before using online.
 
 ## Citation
 As part of oTree's [installation agreement](https://otree.readthedocs.io/en/master/install.html), be sure to cite their paper: 

@@ -41,10 +41,6 @@
 
                 // Convert audio chunks to Blob
                 const blobObj = new Blob(audioChunks, { type: 'video/webm' });
-            
-                // file name
-                const fileName = js_vars.path;
-
 
                 audioRecorder.ondataavailable = (e) => {
                     // Converting audio blob to base64 and livesend
